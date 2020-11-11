@@ -205,14 +205,3 @@ kw_dict = {
     "!<": "comparison",
     "!>": "comparison",
 }
-
-check = "SELECT COLUMN_1, COLUMN_2, * FROM TABLE WHERE 1 = 1"
-sql_dict = {}
-for i, c in enumerate(check.split()):
-    try:
-        sql_dict[(i, c)] = kw_dict[c]
-    except KeyError:
-        sql_dict[(i, c)] = None
-
-
-print(sql_dict)
