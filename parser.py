@@ -50,7 +50,10 @@ class Lexer:
         try:
             return keywords.kw_dict[self.char]
         except KeyError:
-            return 'Plain'
+            if self.char.replace(".", "").isdigit():
+                return "num"
+            else:
+                return "non_keyword"
 
     def advance(self):
         self.position.advance(self.word)
