@@ -1,12 +1,6 @@
-import re
 from typing import Any, List
 
 import keywords
-
-kw = keywords.sql_keywords
-fkw = keywords.fql_keywords
-op = keywords.operators
-comp = keywords.comparisons
 
 
 class Error:
@@ -51,12 +45,12 @@ class Lexer:
         )
         self.word = self.body[self.position.idx]
 
-    def char_tagger(self, char: str) -> str:
+    def _char_tagger(self, char: str) -> str:
         self.char = char
-        return 'leave me alone'
-        # this will replace the discover_keyword if statements
-        # for w in self.body:
-        #     char_tagger(w)
+        try:
+            return keywords.kw_dict[self.char]
+        except KeyError:
+            return 'Plain'
 
     def advance(self):
         self.position.advance(self.word)
@@ -65,16 +59,6 @@ class Lexer:
     def discover_keywords(self):
         self.keyword_dict = {}
         for i, w in enumerate(self.body):
-            if w == "*" and self.body[i - 1] == "SELECT":
-                self.keyword_dict[(w, i)] = "keyword"
-            elif w in kw:
-                self.keyword_dict[(w, i)] = "keyword"
-            elif w in fkw:
-                self.keyword_dict[(w, i)] = "fql_keyword"
-            elif w in op:
-                self.keyword_dict[(w, i)] = "operator"
-            elif w in comp:
-                self.keyword_dict[(w, i)] = "comparison"
-            else:
-                self.keyword_dict[(w, i)] = "plain"
+            tag = self._char_tagger(w)
+            self.keyword_dict[(i, w)] = tag
         return self.keyword_dict
