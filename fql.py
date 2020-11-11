@@ -1,4 +1,6 @@
+import re
 from typing import Any, List
+
 import keywords
 
 kw = keywords.sql_keywords
@@ -21,9 +23,7 @@ class Error:
 
 
 class Position:
-    def __init__(
-        self, idx: int, line: int, file_name: str, file_text: str
-    ) -> None:
+    def __init__(self, idx: int, line: int, file_name: str, file_text: str) -> None:
         self.idx = idx
         self.line = line
         self.file_name = file_name
@@ -42,11 +42,20 @@ class Position:
 class Lexer:
     def __init__(self, file_name: str, file_text: str) -> None:
         self.file_name = file_name
-        self.file_text = file_text
+        self.file_text = file_text.upper()
         self.position = Position(-1, 0, file_name, file_text)
         self.body: List[str] = self.file_text.split()
-        self.clauses: List[str] = self.file_text.split(sep=',')
+        self.clauses: List[str] = self.file_text.split(sep=",")
+        self.select: List[str] = self.file_text.split(
+            sep="FROM",
+        )
         self.word = self.body[self.position.idx]
+
+    def char_tagger(self, char: str) -> str:
+        self.char = char
+        # this will replace the discover_keyword if statements
+        # for w in self.body:
+        #     char_tagger(w)
 
     def advance(self):
         self.position.advance(self.word)
@@ -55,18 +64,18 @@ class Lexer:
     def discover_keywords(self):
         self.keyword_dict = {}
         for i, w in enumerate(self.body):
-            if w == '*' and self.body[i - 1] == "SELECT":
-                self.keyword_dict[(w, i)] = 'keyword'
+            if w == "*" and self.body[i - 1] == "SELECT":
+                self.keyword_dict[(w, i)] = "keyword"
             elif w in kw:
-                self.keyword_dict[(w, i)] = 'keyword'
+                self.keyword_dict[(w, i)] = "keyword"
             elif w in fkw:
-                self.keyword_dict[(w, i)] = 'fql_keyword'
+                self.keyword_dict[(w, i)] = "fql_keyword"
             elif w in op:
-                self.keyword_dict[(w, i)] = 'operator'
+                self.keyword_dict[(w, i)] = "operator"
             elif w in comp:
-                self.keyword_dict[(w, i)] = 'comparison'
+                self.keyword_dict[(w, i)] = "comparison"
             else:
-                self.keyword_dict[(w, i)] = 'plain'
+                self.keyword_dict[(w, i)] = "plain"
         return self.keyword_dict
 
 
@@ -75,4 +84,4 @@ TEST_TEXT = """EXCLUDING (COLUMN2) SELECT
 FROM TEST_TABLE
 WHERE 1 = 1"""
 
-lex = Lexer('fql.py', TEST_TEXT)
+lex = Lexer("fql.py", TEST_TEXT)
