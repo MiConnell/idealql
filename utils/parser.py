@@ -1,6 +1,8 @@
 from typing import Any, List
-
-import keywords
+import re
+import sys
+sys.path.append('../')
+from keywords import keywords
 
 
 class Error:
@@ -54,6 +56,12 @@ class Lexer:
                 return "num"
             else:
                 return "non_keyword"
+
+    def excluded_columns(self) -> List[str]:
+        self.query = self.file_text
+        self.excols = "(?<=excluding)(.*)(?=select)"
+        self.exclusions = "".join(re.findall(self.excols, self.query)).split()
+        return self.exclusions
 
     def advance(self):
         self.position.advance(self.word)
