@@ -1,1 +1,4 @@
 *pycache*
+tests/
+re_testing.py
+.vscode/
