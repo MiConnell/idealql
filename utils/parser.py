@@ -1,7 +1,8 @@
 from typing import Any, List
 import re
 import sys
-sys.path.append('../')
+
+sys.path.append("../")
 from keywords import keywords
 
 
@@ -36,16 +37,20 @@ class Position:
 
 
 class Lexer:
-    def __init__(self, file_name: str, file_text: str) -> None:
+    def __init__(self, file_name: str) -> None:
         self.file_name = file_name
-        self.file_text = file_text.upper()
-        self.position = Position(-1, 0, file_name, file_text)
+        self.file_text = self._preprocess(self.file_name)
+        self.position = Position(-1, 0, self.file_name, self.file_text)
         self.body: List[str] = self.file_text.split()
         self.clauses: List[str] = self.file_text.split(sep=",")
         self.select: List[str] = self.file_text.split(
             sep="FROM",
         )
         self.word = self.body[self.position.idx]
+
+    def _preprocess(self, file_name: str) -> str:
+        self.file_name = file_name
+        return " ".join(open(self.file_name, "r").read().split()).replace(",", "")
 
     def _char_tagger(self, char: str) -> str:
         self.char = char
@@ -60,7 +65,9 @@ class Lexer:
     def excluded_columns(self) -> List[str]:
         self.query = self.file_text
         self.excols = "(?<=excluding)(.*)(?=select)"
-        self.exclusions = "".join(re.findall(self.excols, self.query)).split()
+        self.exclusions = "".join(
+            re.findall(self.excols, self.query, re.IGNORECASE)
+        ).split()
         return self.exclusions
 
     def advance(self):
