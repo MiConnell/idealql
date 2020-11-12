@@ -62,6 +62,7 @@ class Lexer:
             else:
                 return "non_keyword"
 
+    @property
     def excluded_columns(self) -> List[str]:
         self.query = self.file_text
         self.excols = "(?<=excluding)(.*)(?=select)"
@@ -74,6 +75,7 @@ class Lexer:
         self.position.advance(self.word)
         self.word = self.body[self.position.idx]
 
+    @property
     def discover_keywords(self):
         self.keyword_dict = {}
         for i, w in enumerate(self.body):
