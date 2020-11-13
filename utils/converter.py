@@ -13,15 +13,14 @@ query_file = "../queries.fql"
 
 lex = parser.Lexer(query_file)
 
-excluding = lex.excluded_columns
-
-print(lex.body, excluding)
-
 # This is just here so no errors are raised
 def execute(query: str) -> List[str]:
     query = query
-    return ['COLUMN3', 'COLUMN4']
+    return ["COLUMN3", "COLUMN4"]
+
+
 # Carry on
+
 
 class ConvertSelect:
     def __init__(self, excluded_columns: List[str]) -> None:
@@ -37,7 +36,9 @@ class ConvertSelect:
                 AND COLUMN_NAME NOT IN
                 ({", ".join(excluded_columns)})
         """
-        self.included_columns = execute(self.inclusive_select_statement)  # need to actually run the query
+        self.included_columns = execute(
+            self.inclusive_select_statement
+        )  # need to actually run the query
 
     def inclusive_select(self) -> str:
         self.exc_select_statement: str = lex.file_text.replace(
