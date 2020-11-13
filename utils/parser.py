@@ -1,6 +1,6 @@
-from typing import Any, List
 import re
 import sys
+from typing import Any, List
 
 sys.path.append("../")
 from keywords import keywords
@@ -39,7 +39,7 @@ class Position:
 class Lexer:
     def __init__(self, file_name: str) -> None:
         self.file_name = file_name
-        self.file_text = self._preprocess(self.file_name)
+        self.file_text: str = self._preprocess(self.file_name)
         self.position = Position(-1, 0, self.file_name, self.file_text)
         self.body: List[str] = self.file_text.split()
         self.clauses: List[str] = self.file_text.split(sep=",")
@@ -66,11 +66,15 @@ class Lexer:
     def excluded_columns(self) -> List[str]:
         self.query = self.file_text
         self.excols = "(?<=excluding)(.*)(?=select)"
-        self.exclusions = "".join(
-            re.findall(self.excols, self.query, re.IGNORECASE)
-        ).split()
-        return self.exclusions
+        return "".join(re.findall(self.excols, self.query, re.IGNORECASE)).split()
 
+    @property
+    def from_table(self) -> str:
+        # TODO add parsing for subqueries/multiple froms
+        # for now will just use FROM even though this will need to be updated
+        return self.body[self.body.index("FROM") + 1]
+
+#   likely removing
     def advance(self):
         self.position.advance(self.word)
         self.word = self.body[self.position.idx]
