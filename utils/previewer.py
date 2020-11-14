@@ -1,14 +1,14 @@
 import parser
 import sys
-sys.path.append('../')
+
+sys.path.append("../")
+
 
 def execute(query):
     return query
 
 
-# class Preview(parser.Lexer):
-class Preview:
-
+class Preview(parser.Lexer):
     def __init__(self) -> None:
         self.query = "PREVIEW DELETE FROM TABLE WHERE 51 % 17 = 0"
 
