@@ -15,6 +15,7 @@ ps.add_argument(
 )
 args = ps.parse_args()
 creds = os.path.abspath(str(args.credentials))
+file_name = os.path.abspath("".join(args.file_name))
 conn = (
     connection.get_connection(creds)
     if args.credentials
@@ -29,6 +30,8 @@ class InvalidConnectionError(Exception):
 class FQL:
     def __init__(self, ag):
         self.ag = ag
+        self.query = " ".join(
+            open(file_name, "r").read().split())
         return None
 
     def __repr__(self) -> str:
@@ -45,11 +48,13 @@ Either add the file there or set a new file name and location with --credentials
             )
 
     def main(self):
-        return self
-        # return parser.Lexer(str(Path(args.file_name).resolve()))
+        self.parse = parser.Lexer(str(file_name))
+        self.convert = converter.ConvertSelect(self.parse.excluded_columns)
+        self.preview = previewer.Preview(self.query)
+        return self.preview.to_be_deleted()
 
 
 if __name__ == "__main__":
     reader = FQL(args)
     reader.initialize()
-    reader.main()
+    print(reader.main())
