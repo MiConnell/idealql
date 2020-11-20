@@ -1,12 +1,36 @@
-import parser
+from connections.connection import SetConnection
 
-test_text = """EXCLUDING (COLUMN2) SELECT
- *, 10 * 10,
-FROM TEST_TABLE
-WHERE 1.24 = 1.67"""
+from utils import converter, parser, previewer
+from connections import connection
 
-test_text = " ".join(test_text.lower().split()).replace(',', '')
+conn = [
+    'mssql',
+    'localhost',
+    'dbname',
+    'sa',
+    'someThingComplicated1234'
+]
 
-print(test_text)
 
-lex = parser.Lexer("fql.py", test_text)
+class FQL:
+    def __init__(self):
+        return None
+
+    def __repr__(self) -> str:
+        return f'FQL Connection: {self.conn}'
+
+    def initialize(self, conn):
+        self.conn = connection.SetConnection(*conn)
+
+    def main(self):
+        return self
+
+if __name__ == "__main__":
+    reader = FQL()
+    reader.main()
+
+
+f = FQL()
+f.initialize(conn)
+
+print(f)
