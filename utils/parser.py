@@ -4,19 +4,6 @@ from typing import Any, List
 from keywords import keywords
 
 
-class Error:
-    def __init__(
-        self, position_start: int, position_end: int, error_name: str, details: str
-    ):
-        self.position_start = position_start
-        self.position_end = position_end
-        self.error_name = error_name
-        self.details = details
-
-    def as_string(self):
-        return f"{self.error_name}: {self.details}"
-
-
 class Position:
     def __init__(self, idx: int, line: int, file_name: str, file_text: str) -> None:
         self.idx = idx
