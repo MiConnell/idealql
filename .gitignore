@@ -4,3 +4,4 @@ re_testing.py
 .vscode/
 notes/*
 fql_testing.py
+connections/*
