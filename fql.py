@@ -14,12 +14,25 @@ ps.add_argument(
     help="set the connection file destination (drive name only, file must be named 'credentials.json')",
 )
 args = ps.parse_args()
-creds = os.path.abspath(str(args.credentials))
+if not args.credentials:
+    try:
+        creds = os.path.abspath(str(connection.__location__))
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            f"""credentials.json file not found in default location '{connection.__location__}'!
+             Either add the file there or set a new file name and location with --credentials (or -c)."""
+        )
+else:
+    try:
+        creds = os.path.abspath(str(args.credentials))
+    except FileNotFoundError:
+        raise FileNotFoundError(f"'credentials.json' not found in '{args.credentials}'")
+
 file_name = os.path.abspath("".join(args.file_name))
 conn = (
-    connection.get_connection(creds)
-    if args.credentials
-    else connection.get_connection()
+    connection.get_connection()
+    if not args.credentials
+    else connection.get_connection(creds)
 )
 
 
@@ -30,8 +43,7 @@ class InvalidConnectionError(Exception):
 class FQL:
     def __init__(self, ag):
         self.ag = ag
-        self.query = " ".join(
-            open(file_name, "r").read().split())
+        self.query = " ".join(open(file_name, "r").read().split())
         return None
 
     def __repr__(self) -> str:
@@ -40,8 +52,8 @@ class FQL:
     def initialize(self):
         try:
             self.conn = connection.SetConnection(*conn)
-        except FileNotFoundError:
-            raise FileNotFoundError(
+        except InvalidConnectionError:
+            raise InvalidConnectionError(
                 f"""credentials.json file not found in default location '{connection.__location__}'!
 
 Either add the file there or set a new file name and location with --credentials (or -c)."""
