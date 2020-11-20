@@ -1,5 +1,3 @@
-import argparse
-import os
 import file_preprocessing as fp
 
 from connections import connection
@@ -7,6 +5,7 @@ from utils import converter, parser, previewer
 
 file_name = fp.file_name
 conn = fp.conn
+args = fp.args
 
 class InvalidConnectionError(Exception):
     pass
