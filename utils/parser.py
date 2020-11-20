@@ -1,8 +1,6 @@
 import re
-import sys
 from typing import Any, List
 
-sys.path.append("../")
 from keywords import keywords
 
 
@@ -57,10 +55,7 @@ class Lexer:
         try:
             return keywords.kw_dict[self.char]
         except KeyError:
-            if self.char.replace(".", "").isdigit():
-                return "num"
-            else:
-                return "non_keyword"
+            return "num" if self.char.replace(".", "").isdigit() else "non_keyword"
 
     @property
     def excluded_columns(self) -> List[str]:
@@ -73,11 +68,6 @@ class Lexer:
         # TODO add parsing for subqueries/multiple froms
         # for now will just use FROM even though this will need to be updated
         return self.body[self.body.index("FROM") + 1]
-
-#   likely removing
-    def advance(self):
-        self.position.advance(self.word)
-        self.word = self.body[self.position.idx]
 
     @property
     def discover_keywords(self):

@@ -1,8 +1,4 @@
-import parser
-import sys
-
-sys.path.append("../")
-
+from utils import parser
 
 def execute(query):
     return query
