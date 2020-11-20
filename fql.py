@@ -12,8 +12,8 @@ class InvalidConnectionError(Exception):
 
 
 class FQL:
-    def __init__(self, ag):
-        self.ag = ag
+    def __init__(self, argument):
+        self.argument = argument
         self.query = " ".join(open(file_name, "r").read().split())
         return None
 
