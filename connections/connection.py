@@ -21,6 +21,8 @@ df = pd.DataFrame()
 #      Postgres
 #      SQLite
 
+"""
+from connections import connection
 driver = "sql server"
 host = "192.168.1.1"
 database = "PROD"
@@ -29,3 +31,4 @@ password = "hunter2"
 port = 8000
 
 s = SetConnection(driver, host, database, user, password, port)
+"""
