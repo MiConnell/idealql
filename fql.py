@@ -1,17 +1,24 @@
 import argparse
+import os
+from pathlib import Path
 
 from connections import connection
 from utils import converter, parser, previewer
 
 ps = argparse.ArgumentParser(description="Run FQL File.")
 ps.add_argument(
-    "file name", metavar="Filename", type=str, nargs=1, help=".fql file to run"
+    "file_name", metavar="Filename", type=str, nargs=1, help=".fql file to run"
 )
-ps.add_argument("-c", "--credentials", help="set the connection file destination")
+ps.add_argument(
+    "-c",
+    "--credentials",
+    help="set the connection file destination (drive name only, file must be named 'credentials.json')",
+)
 args = ps.parse_args()
+creds = os.path.abspath(str(args.credentials))
 conn = (
     connection.get_connection(creds)
-    if (creds := args.credentials)
+    if args.credentials
     else connection.get_connection()
 )
 
@@ -40,7 +47,7 @@ Either add the file there or set a new file name and location with --credentials
 
     def main(self):
         return self
-
+        # return parser.Lexer(str(Path(args.file_name).resolve()))
 
 if __name__ == "__main__":
     reader = FQL(args)
