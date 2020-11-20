@@ -5,8 +5,8 @@ def execute(query):
 
 
 class Preview(parser.Lexer):
-    def __init__(self) -> None:
-        self.query = "PREVIEW DELETE FROM TABLE WHERE 51 % 17 = 0"
+    def __init__(self, query) -> None:
+        self.query = query
 
     def _replace_delete(self):
         return self.query.upper().replace("PREVIEW ", "").replace("DELETE", "SELECT")
