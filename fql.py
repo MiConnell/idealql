@@ -1,6 +1,5 @@
 import argparse
 import os
-from pathlib import Path
 
 from connections import connection
 from utils import converter, parser, previewer
@@ -48,6 +47,7 @@ Either add the file there or set a new file name and location with --credentials
     def main(self):
         return self
         # return parser.Lexer(str(Path(args.file_name).resolve()))
+
 
 if __name__ == "__main__":
     reader = FQL(args)
