@@ -1,5 +1,6 @@
 from utils import parser
 
+
 def execute(query):
     return query
 

@@ -13,6 +13,7 @@ def execute(query: str) -> List[str]:
     query = query
     return ["COLUMN3", "COLUMN4"]
 
+
 conn = connection
 # Carry on
 
@@ -23,9 +24,14 @@ class ConvertSelect:
     ->
     SELECT COLUMN1, COLUMN2, COLUMN3, COLUMN5 FROM _TABLE_
     """
+
     def __init__(self, excluded_columns: List[str]) -> None:
         self.excluded_columns = excluded_columns
-        self.other_columns = self._included_columns(self.excluded_columns) if self.excluded_columns is not None else None
+        self.other_columns = (
+            self._included_columns(self.excluded_columns)
+            if self.excluded_columns is not None
+            else None
+        )
 
     # get all columns except excluded from database
     def _included_columns(self, excluded_columns: List[str]) -> None:
