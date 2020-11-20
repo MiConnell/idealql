@@ -1,17 +1,34 @@
-from dataclasses import dataclass
+import json
+import os
 from typing import Optional
 
 import pandas as pd
 
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
-@dataclass
+
+def get_connection(file_location=__location__):
+    with open(os.path.join(file_location, "credentials.json")) as f:
+        (credentials,) = json.load(f)
+    return [v for v in credentials.values()]
+
+
 class SetConnection:
-    driver: str
-    host: str
-    database: str
-    user: str
-    password: str
-    port: Optional[int] = 8000
+    def __init__(
+        self,
+        driver: str,
+        host: str,
+        database: str,
+        username: str,
+        password: str,
+        port: Optional[int] = 8000,
+    ):
+        self.driver = driver
+        self.host = host
+        self.database = database
+        self.user = username
+        self.password = password
+        self.port = port
 
 
 df = pd.DataFrame()
