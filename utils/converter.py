@@ -1,10 +1,11 @@
-import fql
-from utils import parser
 import re
 from typing import List
 
+import file_preprocessing
+import fql
 import pandas as pd
-from connections import connection
+
+from utils import parser
 
 df = pd.DataFrame()
 
@@ -12,11 +13,10 @@ df = pd.DataFrame()
 def execute(query: str) -> List[str]:
     query = query
     return ["COLUMN3", "COLUMN4"]
+# carry on
 
 
-conn = connection
-# Carry on
-
+conn = file_preprocessing.conn
 
 class ConvertSelect:
     """
