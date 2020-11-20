@@ -1,7 +1,7 @@
-from utils import converter, parser, previewer
-from connections import connection
-
 import argparse
+
+from connections import connection
+from utils import converter, parser, previewer
 
 ps = argparse.ArgumentParser(description="Run FQL File.")
 ps.add_argument(
@@ -9,11 +9,12 @@ ps.add_argument(
 )
 ps.add_argument("-c", "--credentials", help="set the connection file destination")
 args = ps.parse_args()
+conn = (
+    connection.get_connection(creds)
+    if (creds := args.credentials)
+    else connection.get_connection()
+)
 
-if args.credentials:
-    conn = connection.get_connection(args.credentials)
-else:
-    conn = connection.get_connection()
 
 class InvalidConnectionError(Exception):
     pass
