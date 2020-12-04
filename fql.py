@@ -1,5 +1,6 @@
-import file_preprocessing as fp
+import argparse
 
+import file_preprocessing as fp
 from connections import connection
 from utils import converter, parser, previewer
 
@@ -12,7 +13,7 @@ class InvalidConnectionError(Exception):
 
 
 class FQL:
-    def __init__(self, argument):
+    def __init__(self, argument: argparse.Namespace):
         self.argument = argument
         self.query = " ".join(open(FILE_NAME, "r").read().split())
         return None
@@ -33,7 +34,7 @@ Either add the file there or set a new file name and location with --credentials
     def main(self):
         self.parse = parser.Lexer(str(FILE_NAME))
         self.convert = converter.ConvertSelect(self.parse.excluded_columns)
-        self.preview = previewer.Preview(self.query)
+        self.preview = previewer.Preview(self.query, self.conn)
         return self.preview.to_be_deleted()
 
 
