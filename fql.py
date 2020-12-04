@@ -29,7 +29,7 @@ class FQL:
             raise InvalidConnectionError(
                 f"""credentials.json file not found in default location '{connection.__location__}'!
 
-Either add the file there or set a new file name and location with --credentials (or -c)."""
+Either add the file there or set a new file name and location with --credentials (or -c).""",
             )
 
     def main(self):
@@ -42,4 +42,4 @@ Either add the file there or set a new file name and location with --credentials
 if __name__ == "__main__":
     reader = FQL(ARGS)
     reader.initialize()
-    print(reader.main())
+    reader.main()
