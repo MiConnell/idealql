@@ -1,15 +1,18 @@
 import json
 import os
 from typing import Optional
+import sqlite3
 
 import pandas as pd
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
-def get_connection(file_location=__location__):
-    with open(os.path.join(file_location, "credentials.json")) as f:
-        (credentials,) = json.load(f)
+def get_connection(
+    driver: str, file_location=__location__, credential_file="credentials.json"
+):
+    with open(os.path.join(file_location, credential_file)) as f:
+        (credentials,) = [i for i in json.load(f) if i["driver"] == driver]
     return [v for v in credentials.values()]
 
 
@@ -31,21 +34,5 @@ class SetConnection:
         self.port = port
 
 
-df = pd.DataFrame()
-
-# TODO - connectors to
-#      MySQL
-#      Postgres
-#      SQLite
-
-"""
-from connections import connection
-driver = "sql server"
-host = "192.168.1.1"
-database = "PROD"
-user = "SA"
-password = "hunter2"
-port = 8000
-
-s = SetConnection(driver, host, database, user, password, port)
-"""
+if __name__ == "__main__":
+    pass
