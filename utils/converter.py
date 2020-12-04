@@ -35,7 +35,7 @@ class ConvertSelect:
 
     # get all columns except excluded from database
     def _included_columns(self, excluded_columns: List[str]) -> None:
-        self.lex = parser.Lexer(fql.file_name)
+        self.lex = parser.Lexer(fql.FILE_NAME)
         self.excluded_columns = excluded_columns
         self.inclusive_select_statement = f"""
                 SELECT COLUMN_NAME FROM

@@ -13,6 +13,12 @@ ps.add_argument(
     "--credentials",
     help="set the connection file destination (drive name only, file must be named 'credentials.json')",
 )
+
+ps.add_argument(
+    "-d",
+    "--driver",
+    help="specify which driver to use",
+)
 args = ps.parse_args()
 
 # define credentials
@@ -37,7 +43,7 @@ file_name = os.path.abspath("".join(args.file_name))
 
 # get connection properties based on credentials input or default
 conn = (
-    connection.get_connection()
+    connection.get_connection(args.driver)
     if not args.credentials
     else connection.get_connection(creds)
 )
