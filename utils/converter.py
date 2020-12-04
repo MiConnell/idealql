@@ -48,13 +48,14 @@ class ConvertSelect:
                 ({", ".join(self.excluded_columns)})
         """
         self.included_columns = execute(
-            self.inclusive_select_statement
+            self.inclusive_select_statement,
         )  # need to actually run the query
 
     # take columns from _included_columns and replace * in SELECT with those columns
     def inclusive_select(self) -> str:
         self.exc_select_statement: str = self.lex.file_text.replace(
-            "*", ", ".join(iter(self.included_columns))
+            "*",
+            ", ".join(iter(self.included_columns)),
         )
         presel = "(?<=select).*"
         return f'SELECT{"".join(re.findall(presel, (self.exc_select_statement), re.IGNORECASE))}'

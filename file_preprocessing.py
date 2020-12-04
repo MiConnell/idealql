@@ -6,7 +6,11 @@ from connections import connection
 # add argument parsing
 ps = argparse.ArgumentParser(description="Run FQL File.")
 ps.add_argument(
-    "file_name", metavar="Filename", type=str, nargs=1, help=".fql file to run"
+    "file_name",
+    metavar="Filename",
+    type=str,
+    nargs=1,
+    help=".fql file to run",
 )
 ps.add_argument(
     "-c",
@@ -29,7 +33,7 @@ if not args.credentials:
     except FileNotFoundError:
         raise FileNotFoundError(
             f"""credentials.json file not found in default location '{connection.__location__}'!
-             Either add the file there or set a new file name and location with --credentials (or -c)."""
+             Either add the file there or set a new file name and location with --credentials (or -c).""",
         )
 else:
     try:
