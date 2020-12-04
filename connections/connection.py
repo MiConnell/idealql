@@ -1,9 +1,7 @@
 import json
 import os
-from typing import List, Optional
 import sqlite3
-
-import pandas as pd
+from typing import List, Optional
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
