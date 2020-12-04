@@ -5,3 +5,4 @@ notes/*
 fql_testing.py
 connections/*
 db/
+.DS_Store
