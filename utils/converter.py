@@ -1,10 +1,10 @@
 import re
 from typing import List
 
-import file_preprocessing
-import fql
 import pandas as pd
 
+import file_preprocessing
+import fql
 from utils import parser
 
 df = pd.DataFrame()
