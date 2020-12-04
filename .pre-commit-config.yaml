@@ -21,10 +21,12 @@ repos:
     rev: 7593b675996a2cd9ce5cda1e844e55e5718a689e
     hooks:
     -   id: isort
+
 -   repo: https://github.com/asottile/add-trailing-comma
     rev: 228c670c6745c0f17fde36bb2db56c44751587b0
     hooks:
     -   id: add-trailing-comma
+
 -   repo: https://github.com/asottile/pyupgrade
     rev: 59b49e77e418526be489c303b87fa2e19342fe6a
     hooks:
