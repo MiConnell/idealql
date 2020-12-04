@@ -7,7 +7,9 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 
 
 def get_connection(
-    driver: str, file_location: str = __location__, credential_file: str = "credentials.json"
+    driver: str,
+    file_location: str = __location__,
+    credential_file: str = "credentials.json",
 ) -> List[str]:
     with open(os.path.join(file_location, credential_file)) as f:
         (credentials,) = [i for i in json.load(f) if i["driver"] == driver]
