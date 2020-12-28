@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v3.4.0
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
@@ -13,21 +13,21 @@ repos:
     -   id: name-tests-test
 
 -   repo: https://github.com/psf/black
-    rev: 7f75fe3669ebf0627b1b0476a6d02047e909b959
+    rev: 20.8b1
     hooks:
     -   id: black
 
 -   repo: https://github.com/PyCQA/isort
-    rev: 7593b675996a2cd9ce5cda1e844e55e5718a689e
+    rev: 5.6.4
     hooks:
     -   id: isort
 
 -   repo: https://github.com/asottile/add-trailing-comma
-    rev: 228c670c6745c0f17fde36bb2db56c44751587b0
+    rev: v2.0.1
     hooks:
     -   id: add-trailing-comma
 
 -   repo: https://github.com/asottile/pyupgrade
-    rev: 59b49e77e418526be489c303b87fa2e19342fe6a
+    rev: v2.7.4
     hooks:
     -   id: pyupgrade
