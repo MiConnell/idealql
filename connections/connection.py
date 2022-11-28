@@ -12,7 +12,7 @@ def get_connection(
     credential_file: str = "credentials.json",
 ) -> List[str]:
     with open(os.path.join(file_location, credential_file)) as f:
-        (credentials,) = [i for i in json.load(f) if i["driver"] == driver]
+        (credentials,) = (i for i in json.load(f) if i["driver"] == driver)
     return [v for v in credentials.values()]
 
 

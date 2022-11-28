@@ -35,7 +35,7 @@ class Lexer:
 
     def _preprocess(self, file_name: str) -> str:
         self.file_name = file_name
-        return " ".join(open(self.file_name, "r").read().split()).replace(",", "")
+        return " ".join(open(self.file_name).read().split()).replace(",", "")
 
     def _char_tagger(self, char: str) -> str:
         self.char = char
