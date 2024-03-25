@@ -9,6 +9,7 @@ from utils import parser
 
 df = pd.DataFrame()
 
+
 # This is just here so no errors are raised
 def execute(query: str) -> List[str]:
     query = query
